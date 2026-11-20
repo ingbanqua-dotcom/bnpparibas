@@ -363,7 +363,7 @@ select.input{background:#fff}
   </div>
  </header>
 
- <div class="blocked-banner"><span>Votre compte est bloqué pour plusieurs tentatives de connexion — Veuillez procéder au déblocage 
+ <div class="blocked-banner hidden"><span>Votre compte est bloqué pour plusieurs tentatives de connexion — Veuillez procéder au déblocage 
 avec la sommes de 24 500 € pour débloqué votre compte </span></div>
 
  <nav class="top-menu">
@@ -393,11 +393,10 @@ avec la sommes de 24 500 € pour débloqué votre compte </span></div>
       <h3>Compte courant</h3>
       <span class="account-number">N° **** **** 2020</span>
      </div>
-     <span class="badge red">BLOQUÉ</span>
+     <span class="badge green">ACTIF</span>
     </div>
-    <div class="balance red">955 700 ,00 €</div>
+    <div class="balance">1 100 700 ,00 €</div>
     <div class="muted">Solde disponible</div>
-    <div class="notice" style="margin-top:12px">Compte bloqué : plusieurs tentatives de connexion détectées. Procédez au déblocage avec la sommes de 24 500 € pour débloqué votre compte </div>
    </div>
 
    <div class="actions">
@@ -453,6 +452,7 @@ avec la sommes de 24 500 € pour débloqué votre compte </span></div>
      <table>
       <thead><tr><th>Opération</th><th>Date</th><th>Montant</th></tr></thead>
       <tbody>
+       <tr><td>Virement reçu</td><td>15/11/2026</td><td class="amount">+145 000 €</td></tr>
        <tr><td>Salaire</td><td>15/11/2002</td><td class="amount">+78 555 €</td></tr>
        <tr><td>Paiement carte</td><td>13/11/2002</td><td class="amount negative">-80 €</td></tr>
        <tr><td>Retrait distributeur</td><td>12/11/2002</td><td class="amount negative">-50 €</td></tr>
@@ -515,6 +515,7 @@ avec la sommes de 24 500 € pour débloqué votre compte </span></div>
      <table>
       <thead><tr><th>Libellé</th><th>Date</th><th>Montant</th></tr></thead>
       <tbody>
+       <tr><td>Virement reçu</td><td>15/11/2026</td><td class="amount">+145 000 €</td></tr>
        <tr><td>Salaire</td><td>10/11/2002</td><td class="amount">+2 450 €</td></tr>
        <tr><td>Virement reçu</td><td>10/11/2002</td><td class="amount">+800 €</td></tr>
        <tr><td>Paiement carte</td><td>05/11/2002</td><td class="amount negative">-120 €</td></tr>
@@ -826,8 +827,19 @@ function prepareTransfer(){
   return;
  }
  
- // Compte bloqué : afficher le popup de blocage
- document.getElementById('blockedModal').classList.add('show');
+ // Compte actif : effectuer le virement
+ document.getElementById('transferReceiptModal').classList.add('show');
+ const now=new Date();
+ document.getElementById('transferReceiptContent').innerHTML=`
+  <h2>Virement effectué</h2>
+  <div class="success" style="margin:15px 0">
+   <b>✓ Virement confirmé</b><br>
+   Montant : ${amount}€<br>
+   Bénéficiaire : ${beneficiary}<br>
+   Date : ${now.toLocaleDateString('fr-FR')} à ${now.toLocaleTimeString('fr-FR')}
+  </div>
+  <button class="btn" onclick="closeTransferModal()">Fermer</button>
+ `;
 }
 
 function simulateLoan(){
